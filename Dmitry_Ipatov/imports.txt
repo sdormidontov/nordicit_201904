@@ -6,3 +6,7 @@ import numpy as np
 %matplotlib inline
 from sklearn import preprocessing as prep
 from scipy import stats
+from sklearn import model_selection
+from matplotlib.pylab import rc, plot
+from sklearn import metrics
+import itertools
