@@ -1,12 +1,16 @@
-from sklearn import linear_model
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
 import numpy as np
-%matplotlib inline
-from sklearn import preprocessing as prep
-from scipy import stats
-from sklearn import model_selection
+import pandas as pd
+import seaborn as sns
+
+import matplotlib.pyplot as plt
 from matplotlib.pylab import rc, plot
+%matplotlib inline
+
+from sklearn import linear_model
+from sklearn import preprocessing
+from sklearn import model_selection
 from sklearn import metrics
+
+from scipy import stats
+
 import itertools
