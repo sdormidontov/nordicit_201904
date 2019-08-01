@@ -14,3 +14,10 @@ from sklearn import metrics
 from scipy import stats
 
 import itertools
+
+import pydot
+from sklearn.tree import export_graphviz
+from IPython.display import Image
+from sklearn.externals.six import StringIO
+
+from sklearn.tree import DecisionTreeClassifier
