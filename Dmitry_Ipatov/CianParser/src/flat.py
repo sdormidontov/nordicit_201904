@@ -17,15 +17,15 @@ class Flat(object):
         else:
             print('Bad request')
 
-    def get_content_from_file(self, file):
-        with open(file) as f:
-            lst = []
-            for row in f:
-                lst.append(row)
-            text = '\n'.join(lst)
-
-        self.soup = BeautifulSoup(text, 'lxml')
-        self.content = self.soup.contents
+    # def get_content_from_file(self, file):
+    #     with open(file) as f:
+    #         lst = []
+    #         for row in f:
+    #             lst.append(row)
+    #         text = '\n'.join(lst)
+    #
+    #     self.soup = BeautifulSoup(text, 'lxml')
+    #     self.content = self.soup.contents
 
 
 
