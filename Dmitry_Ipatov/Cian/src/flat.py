@@ -30,12 +30,31 @@ class Flat(object):
         self.is_separate_bathroom = False
         self.number_of_bathrooms = 0
 
-        self.type = ''
+        self.flat_type = ''
+        self.planning = ''
+        self.ceiling_height = 0.0
+        self.balcony_quantity = 0
+        self.loggia_quantity = 0
+        self.repair = ''
+        self.view = ''
+
+        self.year_of_construction = 0
+        self.house_type = ''
+        self.overlap_type = ''
+        self.entrances_number = 0
+
+        self.cargo_elevators_quantity = 0
+        self.passengers_elevators_quantity = 0
+        self.heating = ''
+        self.accident_rate = ''
+        self.parking = ''
+        self.garbage_chute = ''
+        self.gas_suply = ''
 
 
 
 
-    # получение контента конкретной квартиры
+        # получение контента конкретной квартиры
     def get_content(self, link):
         flat = requests.get(link)
         if flat.ok:
@@ -133,15 +152,26 @@ class Flat(object):
             self.time_to_metro_by_transport = str.strip(str.split(time[0].text)[1])
 
 
-# Общая информация
+# ========= ОБЩАЯ ИНФОРМАЦИЯ ==========
 
-    # Тип жилья - get_type
-    # Планировка
-    # Высота потолков
+    # Тип жилья - get_flat_type
+    # Планировка - get_planning
+    # Высота потолков - get_ceiling_height
     # Санузел - get_bathroom
-    # Балкон/лоджия
-    # Ремонт
-    # Вид из окон
+    # Балкон/лоджия - get_balcony
+    # Ремонт - get_repair
+    # Вид из окон - get_view
+
+
+    def get_flat_type(self):
+        type = self.soup.find(text='Тип жилья')
+        tag = type.parent.nextSibling
+        self.flat_type = str(tag.contents[0])
+
+    def get_planning(self):
+        planning = self.soup.find(text='Планировка')
+        tag = planning.parent.nextSibling
+        self.planning = str(tag.contents[0])
 
     def get_bathroom(self):
         bathroom = self.soup.find(text='Санузел')
@@ -153,14 +183,134 @@ class Flat(object):
         elif 'совмещен' in str(text).lower():
             self.is_combined_bathroom = True
 
-    def get_type(self):
-        type = self.soup.find(text='Тип жилья')
-        tag = type.parent.nextSibling
-        self.type = str(tag.contents[0])
+    def get_ceiling_height(self):
+        ceiling_height = self.soup.find(text='Высота потолков')
+        tag = ceiling_height.parent.nextSibling
+        self.ceiling_height = float(
+                (str.split(
+                    str(tag.contents[0]), ' ')[0]
+                ).replace(',', '.')
+            )
+
+    def get_balcony(self):
+        balcony = self.soup.find(text='Балкон/лоджия')
+        tag = balcony.parent.nextSibling
+        s = str(tag.contents[0])
+        lst = (s.split(' '))
+        # https://stackoverflow.com/questions/13779526/finding-a-substring-within-a-list-in-python
+        try:
+            sub_balcony = 'балк'
+            elem = next((s for s in lst if sub_balcony in s), None)
+            self.balcony_quantity = int(lst[lst.index(elem) - 1])
+        except Exception:
+            print('no balcony info')
+
+        try:
+            sub_loggia = 'лодж'
+            elem = next((s for s in lst if sub_loggia in s), None)
+            self.loggia_quantity = int(lst[lst.index(elem) - 1])
+        except Exception:
+            print('no loggia info')
+
+    def get_repair(self):
+        repair = self.soup.find(text='Ремонт')
+        tag = repair.parent.nextSibling
+        self.repair = str(tag.contents[0])
+
+    def get_view(self):
+        view = self.soup.find(text='Вид из окон')
+        tag = view.parent.nextSibling
+        self.view = str(tag.contents[0])
 
 
-#TODO добавить О Доме - год постройки и т д  - пример - https://krasnogorsk.cian.ru/sale/flat/213030063/
 
+# ========= О ДОМЕ ==========
+#год постройки
+    def get_year_of_construction(self):
+        year_of_construction = self.soup.find(text='Год постройки')
+        tag = year_of_construction.parent.nextSibling
+        self.year_of_construction = int(tag.contents[0])
+
+
+# тип дома
+    def get_house_type(self):
+        house_type = self.soup.find(text='Тип дома')
+        tag = house_type.parent.nextSibling
+        self.house_type = str(tag.contents[0])
+
+
+
+# тип перекрытий
+    def get_overlap_type(self):
+        overlap_type = self.soup.find(text='Тип перекрытий')
+        tag = overlap_type.parent.nextSibling
+        self.overlap_type = str(tag.contents[0])
+
+# число подъездов
+    def get_entrances_number(self):
+        entrances_number = self.soup.find(text='Подъезды')
+        tag = entrances_number.parent.nextSibling
+        self.entrances_number = int(tag.contents[0])
+
+# лифты - пассажирский/грузовой
+    def get_elevators(self):
+        elevators = self.soup.find(text='Лифты')
+        tag = elevators.parent.nextSibling
+        s = str(tag.contents[0])
+        lst = (s.split(' '))
+        try:
+            sub_cargo= 'грузов'
+            elem = next((s for s in lst if sub_cargo in s), None)
+            self.cargo_elevators_quantity = int(lst[lst.index(elem) - 1])
+        except Exception:
+            print('no cargo elevators info')
+
+        try:
+            sub_passengers = 'пассажирск'
+            elem = next((s for s in lst if sub_passengers in s), None)
+            self.passengers_elevators_quantity = int(lst[lst.index(elem) - 1])
+        except Exception:
+            print('no passenger elevators info')
+
+# отопление
+    def get_heating(self):
+        heating = self.soup.find(text='Отопление')
+        tag = heating.parent.nextSibling
+        self.heating = str(tag.contents[0])
+
+# аварийность
+    def get_accident_rate(self):
+        accident_rate = self.soup.find(text='Аварийность')
+        tag = accident_rate.parent.nextSibling
+        self.accident_rate = str(tag.contents[0])
+
+# парковка
+    def get_parking(self):
+        parking = self.soup.find(text='Парковка')
+        tag = parking.parent.nextSibling
+        self.parking = str(tag.contents[0])
+
+# мусоропровод
+    def get_garbage_chute(self):
+        garbage_chute = self.soup.find(text='Мусоропровод')
+        tag = garbage_chute.parent.nextSibling
+        self.garbage_chute = str(tag.contents[0])
+
+#Газоснабжение
+    def get_gas_suply(self):
+        gas_suply = self.soup.find(text='Газоснабжение')
+        tag = gas_suply.parent.nextSibling
+        self.gas_suply = str(tag.contents[0])
+
+#
+# Полезные ссылки
+# https://www.cian.ru/sale/flat/212633712/
+# https://www.cian.ru/sale/flat/211834401/
+# https://www.cian.ru/sale/flat/211180392/
+# https://www.cian.ru/sale/flat/213792979/
+# https://krasnogorsk.cian.ru/sale/flat/213030063/
+# https://krasnogorsk.cian.ru/sale/flat/202139647/
+# https://www.cian.ru/rent/flat/214273524/
 
 
 

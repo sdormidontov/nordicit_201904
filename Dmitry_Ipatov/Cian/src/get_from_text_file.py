@@ -131,13 +131,82 @@ class Flat(object):
         elif 'совмещен' in str(text).lower():
             print('c')
 
+    def get_planning(self):
+        planning = self.soup.find(text='Планировка')
+        tag = planning.parent.nextSibling
+        print(str(tag.contents[0]))
+
+    def get_ceiling_height(self):
+        ceiling_height = self.soup.find(text='Высота потолков')
+        tag = ceiling_height.parent.nextSibling
+
+
+        print(
+            float(
+                (str.split(
+                    str(tag.contents[0]), ' ')[0]
+                ).replace(',','.')
+            )
+        )
+
+    def get_balcony(self):
+        balcony = self.soup.find(text='Балкон/лоджия')
+        tag = balcony.parent.nextSibling
+        s = str(tag.contents[0])
+        lst = (s.split(' '))
+        # https://stackoverflow.com/questions/13779526/finding-a-substring-within-a-list-in-python
+
+
+        sub_balcony = 'балк'
+        elem = next((s for s in lst if sub_balcony in s), None)
+        balcony_quantity = lst[lst.index(elem) - 1]
+        print(balcony_quantity)
+
+        try:
+            sub_loggia = 'лодж'
+            elem = next((s for s in lst if sub_loggia in s), None)
+            loggia_quantity = lst[lst.index(elem) - 1]
+            print(loggia_quantity)
+        except Exception:
+            print('no loggia info')
+
+
+    def get_year_of_construction(self):
+        year_of_construction = self.soup.find(text='Год постройки')
+        tag = year_of_construction.parent.nextSibling
+        print(int(tag.contents[0]))
 
 
 
+    def get_elevators(self):
+        elevators = self.soup.find(text='Лифты')
+        tag = elevators.parent.nextSibling
+        s = str(tag.contents[0])
+        lst = (s.split(' '))
+        try:
+            sub_cargo= 'грузов'
+            elem = next((s for s in lst if sub_cargo in s), None)
+            print( int(lst[lst.index(elem) - 1]) )
+        except Exception:
+            print('no cargo elevators info')
+
+        try:
+            sub_passengers = 'пассажирск'
+            elem = next((s for s in lst if sub_passengers in s), None)
+            print( int(lst[lst.index(elem) - 1]) )
+        except Exception:
+            print('no passenger elevators info')
+
+
+
+# ['1', 'балкон,', '1', 'лоджия']
 
 
 f = Flat()
-f.get_content_from_file('nekrasovka.txt')
+f.get_content_from_file('krasnogorsk.txt')
+
+f.get_elevators()
+
 # f.get_metro()
 # f.get_square_meters_total()
 # f.get_square_meters_living_room()
@@ -145,7 +214,7 @@ f.get_content_from_file('nekrasovka.txt')
 
 #f.get_time_to_metro_on_foot()
 
-f.get_type()
+#f.get_type()
 #f.get_bathroom()
 
 

@@ -187,10 +187,93 @@ for i in links_to_flats:
 
 
     try:
-        flat.get_type()
+        flat.get_flat_type()
     except Exception:
         print('get_type error')
-    print('type: ', flat.type)
+    print('type: ', flat.flat_type)
+
+    try:
+        flat.get_planning()
+    except Exception:
+        print('get_planning error')
+    print('planning: ', flat.planning)
+
+    try:
+        flat.get_ceiling_height()
+    except Exception:
+        print('get_ceiling_height error')
+    print('ceiling height: ', flat.ceiling_height)
+
+    try:
+        flat.get_balcony()
+    except Exception:
+        print('get_balcony error')
+
+    try:
+        flat.get_repair()
+    except Exception:
+        print('get_repair error')
+    print('repair: ', flat.repair)
+
+    try:
+        flat.get_view()
+    except Exception:
+        print('get_view error')
+    print('view: ', flat.view)
+
+    try:
+        flat.get_year_of_construction()
+        print('year of construction: ', flat.year_of_construction)
+    except Exception:
+        print('get_year_of_construction error')
+
+    try:
+        flat.get_house_type()
+        print('house type: ', flat.house_type)
+    except Exception:
+        print('get_house_type error')
+
+    try:
+        flat.get_overlap_type()
+        print('overlap type: ', flat.overlap_type)
+    except Exception:
+        print('get_overlap_type error')
+
+    try:
+        flat.get_entrances_number()
+        print('entrances number: ', flat.entrances_number)
+    except Exception:
+        print('get_entrances_number error')
+
+    try:
+        flat.get_elevators()
+    except Exception:
+        print('get_elevators error')
+
+    try:
+        flat.get_heating()
+        print('heating: ', flat.heating)
+    except Exception:
+        print('get_heating error')
+
+    try:
+        flat.get_accident_rate()
+        print('accident rate: ', flat.accident_rate)
+    except Exception:
+        print('get_accident_rate error')
+
+    try:
+        flat.get_parking()
+        print('parking: ', flat.parking)
+    except Exception:
+        print('get_parking error')
+
+    try:
+        flat.get_garbage_chute()
+        print('garbage: ', flat.garbage_chute)
+    except Exception:
+        print('get_garbage error')
+
 
     print('========')
     time.sleep(2)
@@ -215,7 +298,25 @@ for i in links_to_flats:
                              flat.time_to_metro_by_transport,
                              flat.number_of_bathrooms,
                              flat.is_combined_bathroom,
-                             flat.is_separate_bathroom])
+                             flat.is_separate_bathroom,
+                             flat.flat_type,
+                             flat.planning,
+                             flat.ceiling_height,
+                             flat.balcony_quantity,
+                             flat.loggia_quantity,
+                             flat.repair,
+                             flat.view,
+                             flat.year_of_construction,
+                             flat.house_type,
+                             flat.overlap_type,
+                             flat.entrances_number,
+                             flat.cargo_elevators_quantity,
+                             flat.passengers_elevators_quantity,
+                             flat.heating,
+                             flat.accident_rate,
+                             flat.parking,
+                             flat.garbage_chute,
+                             flat.gas_suply])
 
     # delete link
     #links_to_flats.remove(i)
