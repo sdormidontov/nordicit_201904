@@ -1,6 +1,8 @@
 from bs4 import BeautifulSoup
 import requests
 
+import re
+
 
 class Flat(object):
     def __init__(self):
@@ -199,13 +201,21 @@ class Flat(object):
 
 
 
+    def get_price(self):
+        price = self.soup.findAll('span', itemprop = 'price')[0].text
+        price1 = re.sub(r"\s+", "", price)
+        price2 = float(price1.replace('₽', ''))
+        print(price2)
+
+
+
 # ['1', 'балкон,', '1', 'лоджия']
 
 
 f = Flat()
-f.get_content_from_file('krasnogorsk.txt')
+f.get_content_from_file('nekrasovka.txt')
 
-f.get_elevators()
+f.get_price()
 
 # f.get_metro()
 # f.get_square_meters_total()

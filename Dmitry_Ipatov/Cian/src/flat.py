@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import re
 
 
 class Flat(object):
@@ -50,6 +51,8 @@ class Flat(object):
         self.parking = ''
         self.garbage_chute = ''
         self.gas_suply = ''
+
+        self.price = 0.0
 
 
 
@@ -301,6 +304,15 @@ class Flat(object):
         gas_suply = self.soup.find(text='Газоснабжение')
         tag = gas_suply.parent.nextSibling
         self.gas_suply = str(tag.contents[0])
+
+#ЦЕНА
+    def get_price(self):
+        price = self.soup.findAll('span', itemprop='price')[0].text
+        price1 = re.sub(r"\s+", "", price)
+        price2 = float(price1.replace('₽', ''))
+        self.price = price2
+
+
 
 #
 # Полезные ссылки

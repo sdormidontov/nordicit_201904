@@ -274,6 +274,18 @@ for i in links_to_flats:
     except Exception:
         print('get_garbage error')
 
+    try:
+        flat.get_gas_suply()
+        print('gas: ', flat.gas_suply)
+    except Exception:
+        print('get_gas_suply error')
+
+    try:
+        flat.get_price()
+        print('price: ', flat.price)
+    except Exception:
+        print('get_price error')
+
 
     print('========')
     time.sleep(2)
@@ -283,40 +295,41 @@ for i in links_to_flats:
         filewriter = csv.writer(csvfile, delimiter=',')
 
         filewriter.writerow([link,
-                             flat.metro,
-                             flat.square_meters_total,
-                             flat.square_meters_living,
-                             flat.square_meters_kitchen,
-                             flat.current_floor,
-                             flat.total_floors,
-                             flat.city,
-                             flat.district,
-                             flat.neighborhood,
-                             flat.street,
-                             flat.house_number,
-                             flat.time_to_metro_on_foot,
-                             flat.time_to_metro_by_transport,
-                             flat.number_of_bathrooms,
-                             flat.is_combined_bathroom,
-                             flat.is_separate_bathroom,
-                             flat.flat_type,
-                             flat.planning,
-                             flat.ceiling_height,
-                             flat.balcony_quantity,
-                             flat.loggia_quantity,
-                             flat.repair,
-                             flat.view,
-                             flat.year_of_construction,
-                             flat.house_type,
-                             flat.overlap_type,
-                             flat.entrances_number,
-                             flat.cargo_elevators_quantity,
-                             flat.passengers_elevators_quantity,
-                             flat.heating,
-                             flat.accident_rate,
-                             flat.parking,
-                             flat.garbage_chute,
-                             flat.gas_suply])
+                             flat.metro, # метро
+                             flat.square_meters_total, #общая площадь
+                             flat.square_meters_living, #жилая площадь
+                             flat.square_meters_kitchen, #площадь кухни
+                             flat.current_floor, #этаж
+                             flat.total_floors, #всего этажей в доме
+                             flat.city, #город
+                             flat.district, #округ
+                             flat.neighborhood, #район
+                             flat.street, #улица
+                             flat.house_number, #дом
+                             flat.time_to_metro_on_foot, #время до метро пешком
+                             flat.time_to_metro_by_transport, #время до метро на транспорте
+                             flat.number_of_bathrooms, #кол-во санузлов
+                             flat.is_combined_bathroom, #совмещенный санузел
+                             flat.is_separate_bathroom, #раздельный санузел
+                             flat.flat_type, #тип жилья - Первичка и т д
+                             flat.planning, #планировка
+                             flat.ceiling_height, #высота потолков
+                             flat.balcony_quantity, #кол-во балконов
+                             flat.loggia_quantity, #кол-во лоджий
+                             flat.repair, #ремонт
+                             flat.view, #вид
+                             flat.year_of_construction, #год постройки
+                             flat.house_type, #тип дома
+                             flat.overlap_type, #тип перекрытий
+                             flat.entrances_number, #кол-во подъездов
+                             flat.cargo_elevators_quantity, #кол-во грузовых лифтов
+                             flat.passengers_elevators_quantity, #кол-во пассажирских лифтов
+                             flat.heating, #отопление
+                             flat.accident_rate, #аварийность
+                             flat.parking, #парковка
+                             flat.garbage_chute, #мусоропровод
+                             flat.gas_suply, #газоснабжение
+                             flat.price])
 
     # delete link
     #links_to_flats.remove(i)
