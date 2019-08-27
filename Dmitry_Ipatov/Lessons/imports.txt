@@ -21,3 +21,9 @@ from IPython.display import Image
 from sklearn.externals.six import StringIO
 
 from sklearn.tree import DecisionTreeClassifier
+
+
+from sklearn import ensemble
+from sklearn import metrics
+from sklearn import datasets
+from sklearn import utils
