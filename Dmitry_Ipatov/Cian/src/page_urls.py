@@ -15,5 +15,5 @@ def get_page_urls_list(page_from, page_to):
 #
 # print(page_urls)
 
-l = get_page_urls_list(1, 3)
-print(l)
+# l = get_page_urls_list(1, 3)
+# print(l)
