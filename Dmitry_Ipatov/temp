@@ -1,0 +1,25 @@
+алгоритмы
+
+lst = [1, 2, 4, 8, 16]
+
+
+def get_q(lst):
+    return lst[1]/lst[0]
+
+def progression_sum(lst):
+    q = get_q(lst)
+    return (lst[0] * (1 - q**len(lst)))/(1 - q)
+    
+
+def is_progression(lst):
+    
+    x = get_q(lst)
+    for i in range(len(lst)):
+        #print (lst[i+1]/lst[i], lst[i+2]/lst[i+1])        
+            if (lst[-1]/lst[-1-i] != x):            
+                print (lst[-1], lst[-1-i], lst[-1]/lst[-1-i])
+                print ('NO')
+                break
+            else:
+                #print (i, 'YES')
+                print (progression_sum(lst))
